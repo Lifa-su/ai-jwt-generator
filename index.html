@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI JWT Generator - Create, Decode & Verify JSON Web Tokens Online</title>
+<meta name="description" content="Free online JWT generator and decoder. Create, decode, and verify JSON Web Tokens with HS256, HS384, HS512 algorithms. Built with Web Crypto API for secure client-side signing.">
+<meta name="keywords" content="JWT, JSON Web Token, JWT generator, JWT decoder, JWT verifier, HS256, HS384, HS512, HMAC, token generator, web crypto">
+<meta name="author" content="AI JWT Generator">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="AI JWT Generator - Create, Decode & Verify JWTs Online">
+<meta property="og:description" content="Free online tool to generate, decode, and verify JSON Web Tokens with HMAC-SHA algorithms.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://lifa-su.github.io/ai-jwt-generator/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="AI JWT Generator">
+<meta name="twitter:description" content="Free online JWT generator, decoder and verifier with HS256/HS384/HS512 support.">
+<link rel="canonical" href="https://lifa-su.github.io/ai-jwt-generator/">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0f1117;--surface:#1a1d27;--surface2:#242836;--border:#2e3348;--primary:#6c5ce7;--primary-hover:#7c6ff7;--accent:#00cec9;--text:#e2e8f0;--text-dim:#8892b0;--danger:#ff6b6b;--success:#51cf66;--radius:10px;--shadow:0 4px 24px rgba(0,0,0,.3)}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.6}
+.container{max-width:1100px;margin:0 auto;padding:20px}
+header{text-align:center;padding:40px 0 30px}
+header h1{font-size:2.2rem;background:linear-gradient(135deg,var(--primary),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:8px}
+header p{color:var(--text-dim);font-size:1rem}
+.tabs{display:flex;gap:4px;margin-bottom:24px;background:var(--surface);border-radius:var(--radius);padding:4px}
+.tab{flex:1;padding:12px;text-align:center;border:none;background:none;color:var(--text-dim);font-size:.95rem;cursor:pointer;border-radius:8px;transition:all .2s}
+.tab.active{background:var(--primary);color:#fff}
+.tab:hover:not(.active){background:var(--surface2)}
+.panel{display:none}
+.panel.active{display:block}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:768px){.grid{grid-template-columns:1fr}}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow)}
+.card h3{font-size:1rem;color:var(--accent);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+label{display:block;font-size:.85rem;color:var(--text-dim);margin-bottom:6px;font-weight:500}
+textarea,input[type="text"],input[type="password"],input[type="datetime-local"],select{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:10px 12px;color:var(--text);font-size:.9rem;font-family:'SF Mono',Monaco,Consolas,monospace;transition:border-color .2s;outline:none}
+textarea:focus,input:focus,select:focus{border-color:var(--primary)}
+textarea{resize:vertical;min-height:120px}
+.row{display:flex;gap:12px;margin-bottom:14px;align-items:end}
+.row>*{flex:1}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 24px;border:none;border-radius:8px;font-size:.95rem;font-weight:600;cursor:pointer;transition:all .2s;width:100%}
+.btn-primary{background:var(--primary);color:#fff}
+.btn-primary:hover{background:var(--primary-hover);transform:translateY(-1px)}
+.btn-secondary{background:var(--surface2);color:var(--text);border:1px solid var(--border)}
+.btn-secondary:hover{border-color:var(--primary)}
+.btn-danger{background:var(--danger);color:#fff}
+.btn-danger:hover{opacity:.9}
+.output-box{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:14px;font-family:'SF Mono',Monaco,Consolas,monospace;font-size:.85rem;word-break:break-all;min-height:60px;position:relative;margin-top:12px;line-height:1.8}
+.output-box .jwt-header{color:#ff6b6b}
+.output-box .jwt-payload{color:#6c5ce7}
+.output-box .jwt-signature{color:#00cec9}
+.copy-btn{position:absolute;top:8px;right:8px;background:var(--surface2);border:1px solid var(--border);color:var(--text-dim);padding:4px 10px;border-radius:6px;font-size:.75rem;cursor:pointer;transition:all .2s}
+.copy-btn:hover{color:var(--text);border-color:var(--primary)}
+.status{padding:8px 12px;border-radius:6px;font-size:.85rem;margin-top:10px;display:none}
+.status.success{display:block;background:rgba(81,207,102,.1);color:var(--success);border:1px solid rgba(81,207,102,.2)}
+.status.error{display:block;background:rgba(255,107,107,.1);color:var(--danger);border:1px solid rgba(255,107,107,.2)}
+.exp-row{display:flex;gap:12px;align-items:center;margin-top:10px}
+.exp-row label{margin:0;white-space:nowrap}
+.exp-row input{flex:1}
+.section-gap{margin-top:16px}
+.full-width{grid-column:1/-1}
+footer{text-align:center;padding:30px 0;color:var(--text-dim);font-size:.8rem;margin-top:40px;border-top:1px solid var(--border)}
+footer a{color:var(--primary);text-decoration:none}
+.decoded-section{margin-top:14px}
+.decoded-section h4{font-size:.85rem;color:var(--text-dim);margin-bottom:6px}
+.decoded-section pre{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:12px;font-size:.85rem;overflow-x:auto;white-space:pre-wrap;word-break:break-word}
+.badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:.75rem;font-weight:600}
+.badge-valid{background:rgba(81,207,102,.15);color:var(--success)}
+.badge-invalid{background:rgba(255,107,107,.15);color:var(--danger)}
+.badge-info{background:rgba(108,92,231,.15);color:var(--primary)}
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>🔐 AI JWT Generator</h1>
+    <p>Create, decode, and verify JSON Web Tokens — entirely in your browser</p>
+  </header>
+
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('generate')">⚡ Generate</button>
+    <button class="tab" onclick="switchTab('decode')">🔍 Decode & Verify</button>
+  </div>
+
+  <!-- Generate Panel -->
+  <div id="panel-generate" class="panel active">
+    <div class="grid">
+      <div class="card">
+        <h3>📋 Header</h3>
+        <textarea id="headerEditor" spellcheck="false">{"alg":"HS256","typ":"JWT"}</textarea>
+      </div>
+      <div class="card">
+        <h3>📦 Payload</h3>
+        <textarea id="payloadEditor" spellcheck="false">{"sub":"1234567890","name":"John Doe","iat":1516239022}</textarea>
+        <div class="exp-row section-gap">
+          <label><input type="checkbox" id="expToggle"> Set Expiration</label>
+          <input type="datetime-local" id="expTime" disabled>
+        </div>
+      </div>
+      <div class="card full-width">
+        <h3>🔑 Signing</h3>
+        <div class="row">
+          <div>
+            <label>Algorithm</label>
+            <select id="algorithm" onchange="syncAlgorithm()">
+              <option value="HS256">HS256 (HMAC-SHA256)</option>
+              <option value="HS384">HS384 (HMAC-SHA384)</option>
+              <option value="HS512">HS512 (HMAC-SHA512)</option>
+            </select>
+          </div>
+          <div>
+            <label>Secret Key</label>
+            <input type="password" id="secretKey" placeholder="Enter your secret key" value="your-256-bit-secret">
+          </div>
+        </div>
+        <button class="btn btn-primary" onclick="generateJWT()">⚡ Generate JWT</button>
+        <div id="genOutput" class="output-box" style="display:none">
+          <button class="copy-btn" onclick="copyToken('genToken')">Copy</button>
+          <span id="genToken"></span>
+        </div>
+        <div id="genStatus" class="status"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Decode Panel -->
+  <div id="panel-decode" class="panel">
+    <div class="card">
+      <h3>🔍 Decode & Verify JWT</h3>
+      <label>Paste JWT Token</label>
+      <textarea id="decodeInput" rows="4" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIn0.dozjgNryP4J3jVmNHl0w5N_XgL0n3I9PlFUP0THsR8U" spellcheck="false"></textarea>
+      <div class="row section-gap">
+        <div>
+          <label>Secret Key (for verification)</label>
+          <input type="password" id="verifySecret" placeholder="Enter secret to verify signature">
+        </div>
+        <div style="flex:0 0 auto;padding-top:20px">
+          <button class="btn btn-primary" onclick="decodeJWT()" style="width:auto;padding:10px 24px">Decode & Verify</button>
+        </div>
+      </div>
+      <div id="decodeStatus" class="status"></div>
+      <div id="decodeResult" style="display:none">
+        <div class="decoded-section">
+          <h4>Header <span id="algBadge" class="badge badge-info"></span></h4>
+          <pre id="decodedHeader"></pre>
+        </div>
+        <div class="decoded-section">
+          <h4>Payload <span id="expBadge" class="badge"></span></h4>
+          <pre id="decodedPayload"></pre>
+        </div>
+        <div class="decoded-section">
+          <h4>Signature</h4>
+          <div id="sigResult" class="output-box" style="min-height:auto"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>AI JWT Generator — All processing happens locally in your browser. No data is sent to any server.</p>
+    <p style="margin-top:6px"><a href="https://github.com/Lifa-su/ai-jwt-generator" target="_blank">GitHub</a></p>
+  </footer>
+</div>
+
+<script>
+// --- Tab switching ---
+function switchTab(name) {
+  document.querySelectorAll('.tab').forEach((t, i) => t.classList.toggle('active', i === (name === 'generate' ? 0 : 1)));
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('panel-' + name).classList.add('active');
+}
+
+// --- Expiration toggle ---
+const expToggle = document.getElementById('expToggle');
+const expTime = document.getElementById('expTime');
+expToggle.addEventListener('change', () => {
+  expTime.disabled = !expToggle.checked;
+  if (expToggle.checked && !expTime.value) {
+    const d = new Date(Date.now() + 3600000);
+    expTime.value = d.toISOString().slice(0, 16);
+  }
+});
+
+// --- Sync algorithm between header editor and select ---
+function syncAlgorithm() {
+  try {
+    const h = JSON.parse(document.getElementById('headerEditor').value);
+    h.alg = document.getElementById('algorithm').value;
+    document.getElementById('headerEditor').value = JSON.stringify(h, null, 2);
+  } catch (e) {}
+}
+
+// --- Base64URL encode/decode ---
+function b64urlEncode(buf) {
+  const bytes = buf instanceof Uint8Array ? buf : new Uint8Array(buf);
+  let s = '';
+  for (let i = 0; i < bytes.length; i++) s += String.fromCharCode(bytes[i]);
+  return btoa(s).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+}
+function b64urlDecode(str) {
+  str = str.replace(/-/g, '+').replace(/_/g, '/');
+  while (str.length % 4) str += '=';
+  const bin = atob(str);
+  const bytes = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+  return bytes;
+}
+function b64urlEncodeStr(str) {
+  return b64urlEncode(new TextEncoder().encode(str));
+}
+
+// --- HMAC sign ---
+async function hmacSign(algorithm, secret, data) {
+  const algMap = { HS256: 'SHA-256', HS384: 'SHA-384', HS512: 'SHA-512' };
+  const sha = algMap[algorithm];
+  if (!sha) throw new Error('Unsupported algorithm: ' + algorithm);
+  const key = await crypto.subtle.importKey('raw', new TextEncoder().encode(secret), { name: 'HMAC', hash: sha }, false, ['sign']);
+  const sig = await crypto.subtle.sign('HMAC', key, new TextEncoder().encode(data));
+  return new Uint8Array(sig);
+}
+
+// --- Generate JWT ---
+async function generateJWT() {
+  const statusEl = document.getElementById('genStatus');
+  const outputEl = document.getElementById('genOutput');
+  const tokenEl = document.getElementById('genToken');
+  statusEl.className = 'status';
+  statusEl.style.display = 'none';
+  outputEl.style.display = 'none';
+
+  try {
+    let header = JSON.parse(document.getElementById('headerEditor').value);
+    let payload = JSON.parse(document.getElementById('payloadEditor').value);
+    const secret = document.getElementById('secretKey').value;
+    const alg = document.getElementById('algorithm').value;
+
+    if (!secret) throw new Error('Secret key is required');
+
+    header.alg = alg;
+    header.typ = 'JWT';
+
+    if (expToggle.checked && expTime.value) {
+      payload.exp = Math.floor(new Date(expTime.value).getTime() / 1000);
+    }
+
+    if (!payload.iat) {
+      payload.iat = Math.floor(Date.now() / 1000);
+    }
+
+    const headerB64 = b64urlEncodeStr(JSON.stringify(header));
+    const payloadB64 = b64urlEncodeStr(JSON.stringify(payload));
+    const sigInput = headerB64 + '.' + payloadB64;
+    const sig = await hmacSign(alg, secret, sigInput);
+    const sigB64 = b64urlEncode(sig);
+    const jwt = sigInput + '.' + sigB64;
+
+    tokenEl.innerHTML = '<span class="jwt-header">' + headerB64 + '</span>.<span class="jwt-payload">' + payloadB64 + '</span>.<span class="jwt-signature">' + sigB64 + '</span>';
+    outputEl.style.display = 'block';
+    statusEl.textContent = '✅ JWT generated successfully';
+    statusEl.className = 'status success';
+
+    // Update editors with formatted JSON
+    document.getElementById('headerEditor').value = JSON.stringify(header, null, 2);
+    document.getElementById('payloadEditor').value = JSON.stringify(payload, null, 2);
+  } catch (e) {
+    statusEl.textContent = '❌ ' + e.message;
+    statusEl.className = 'status error';
+  }
+}
+
+// --- Copy token ---
+function copyToken(id) {
+  const el = document.getElementById(id);
+  const text = el.textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = el.parentElement.querySelector('.copy-btn');
+    btn.textContent = 'Copied!';
+    setTimeout(() => btn.textContent = 'Copy', 1500);
+  });
+}
+
+// --- Decode & Verify JWT ---
+async function decodeJWT() {
+  const statusEl = document.getElementById('decodeStatus');
+  const resultEl = document.getElementById('decodeResult');
+  statusEl.className = 'status';
+  statusEl.style.display = 'none';
+  resultEl.style.display = 'none';
+
+  const token = document.getElementById('decodeInput').value.trim();
+  const secret = document.getElementById('verifySecret').value;
+
+  if (!token) {
+    statusEl.textContent = '❌ Please paste a JWT token';
+    statusEl.className = 'status error';
+    return;
+  }
+
+  const parts = token.split('.');
+  if (parts.length !== 3) {
+    statusEl.textContent = '❌ Invalid JWT format (expected 3 parts separated by dots)';
+    statusEl.className = 'status error';
+    return;
+  }
+
+  try {
+    const header = JSON.parse(new TextDecoder().decode(b64urlDecode(parts[0])));
+    const payload = JSON.parse(new TextDecoder().decode(b64urlDecode(parts[1])));
+
+    document.getElementById('decodedHeader').textContent = JSON.stringify(header, null, 2);
+    document.getElementById('decodedPayload').textContent = JSON.stringify(payload, null, 2);
+    document.getElementById('algBadge').textContent = header.alg || 'unknown';
+
+    // Check expiration
+    const expBadge = document.getElementById('expBadge');
+    if (payload.exp) {
+      const expDate = new Date(payload.exp * 1000);
+      if (expDate < new Date()) {
+        expBadge.textContent = 'Expired: ' + expDate.toLocaleString();
+        expBadge.className = 'badge badge-invalid';
+      } else {
+        expBadge.textContent = 'Expires: ' + expDate.toLocaleString();
+        expBadge.className = 'badge badge-valid';
+      }
+    } else {
+      expBadge.textContent = 'No expiration';
+      expBadge.className = 'badge badge-info';
+    }
+
+    // Verify signature
+    const sigResult = document.getElementById('sigResult');
+    if (secret) {
+      const alg = header.alg;
+      if (['HS256', 'HS384', 'HS512'].includes(alg)) {
+        const sigInput = parts[0] + '.' + parts[1];
+        const expectedSig = await hmacSign(alg, secret, sigInput);
+        const expectedB64 = b64urlEncode(expectedSig);
+        if (expectedB64 === parts[2]) {
+          sigResult.innerHTML = '<span class="badge badge-valid" style="font-size:.9rem;padding:4px 12px">✅ Signature Valid</span>';
+          statusEl.textContent = '✅ JWT decoded and signature verified';
+          statusEl.className = 'status success';
+        } else {
+          sigResult.innerHTML = '<span class="badge badge-invalid" style="font-size:.9rem;padding:4px 12px">❌ Signature Invalid</span>';
+          statusEl.textContent = '⚠️ JWT decoded but signature verification failed';
+          statusEl.className = 'status error';
+        }
+      } else {
+        sigResult.innerHTML = '<span class="badge badge-info" style="font-size:.9rem;padding:4px 12px">⚠️ Algorithm ' + alg + ' not supported for verification</span>';
+        statusEl.textContent = '✅ JWT decoded (signature verification not available for ' + alg + ')';
+        statusEl.className = 'status success';
+      }
+    } else {
+      sigResult.innerHTML = '<span class="badge badge-info" style="font-size:.9rem;padding:4px 12px">ℹ️ Enter secret key to verify signature</span>';
+      statusEl.textContent = '✅ JWT decoded successfully';
+      statusEl.className = 'status success';
+    }
+
+    resultEl.style.display = 'block';
+  } catch (e) {
+    statusEl.textContent = '❌ Failed to decode: ' + e.message;
+    statusEl.className = 'status error';
+  }
+}
+</script>
+<script src="https://m.servedby-buysellads.com/monetization.js" type="text/javascript"></script>
+</body>
+</html>
